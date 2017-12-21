@@ -1,4 +1,4 @@
-var letters = require("./letter.js");
+var Letter = require("./letter.js");
 
 function Word(word) {
   this.word = word;

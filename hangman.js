@@ -1,5 +1,5 @@
-var inquirer = require("inquirer");
-var word = require("./word.js");
+// var inquirer = require("inquirer");
+var Word = require("./word");
 
 // Can use inquirer or prompt
 
@@ -81,34 +81,12 @@ var game = {
     console.log(this.currentWord.getWord());
   },
 
-  // Refreshes the display with the latest info
-  // update: function() {
-  //   $("#wins").text(this.score);
-  //   $("#current").text(this.currentState.join(" "));
-  //   $("#remaining").text(this.guessesRemaining);
-  //   $("#lettersGuessed").text(this.lettersGuessed);
-  // }
-
 }
 
 
-// $(document).ready(function() {
-
-//   game.reset();
-
-//   $(document).keypress(function(event) {
-
-//     // If the key pressed was a letter, then make a guess.
-//     if(event.which > 96 && event.which < 123 || event.which === 32) {
-//       game.guessLetter(String.fromCharCode(event.which).toUpperCase());
-//     }
-//   });
-
-// });
-
-
-
 game.reset();
+
+game.guessLetter('t'.toUpperCase());
 
 // inquirer code for grabbing stuff and printing stuff goes here
 
