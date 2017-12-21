@@ -1,4 +1,4 @@
-// var inquirer = require("inquirer");
+var prompt = require("prompt");
 var Word = require("./word.js");
 
 // Can use inquirer or prompt

@@ -1,0 +1,32 @@
+{
+  "name": "cli-hangman",
+  "version": "1.0.0",
+  "description": "Command line version of Hangman, with Star Trek theme!",
+  "main": "hangman.js",
+  "dependencies": {
+    "prompt": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node hangman.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArmandFrvr/cli-hangman.git"
+  },
+  "keywords": [
+    "hangman",
+    "command",
+    "line",
+    "node",
+    "prompt",
+    "constructors",
+    "modules"
+  ],
+  "author": "Alwyn Durham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArmandFrvr/cli-hangman/issues"
+  },
+  "homepage": "https://github.com/ArmandFrvr/cli-hangman#readme"
+}
