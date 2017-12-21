@@ -1,5 +1,5 @@
 // var inquirer = require("inquirer");
-var Word = require("./word");
+var Word = require("./word.js");
 
 // Can use inquirer or prompt
 
@@ -50,6 +50,7 @@ var game = {
       }
       else {
         console.log("Sorry.  The letter " + letter + " isn't part of this word.");
+        console.log("You have " + this.guessesRemaining + " guesses left.");
       }
     }
 
@@ -60,7 +61,7 @@ var game = {
 
       // We already updated the word's state with the call to currentWord.guess, so just grab it
       var wordState = this.currentWord.getWord();
-      console.log(wordState);
+      console.log("\n" + wordState + "\n");
 
       // If the word is complete, we win.
       if(wordState.indexOf("_") === -1) {
@@ -78,7 +79,7 @@ var game = {
     this.currentWord = new Word(this.getWord());
     console.log("New word is: " + this.currentWord.word);       // COMMENT THIS OUT LOLLOLCHEATINGLOL
     this.guessesRemaining = this.currentWord.word.length + 5;
-    console.log(this.currentWord.getWord());
+    console.log("\n" + this.currentWord.getWord() + "\n");
   },
 
 }
@@ -87,6 +88,8 @@ var game = {
 game.reset();
 
 game.guessLetter('t'.toUpperCase());
+game.guessLetter('e'.toUpperCase());
+game.guessLetter('n'.toUpperCase());
 
 // inquirer code for grabbing stuff and printing stuff goes here
 
