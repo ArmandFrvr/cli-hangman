@@ -20,13 +20,15 @@ function setLetters(word) {
 // Otherwise just returns false
 Word.prototype.guess = function(letter) {
 
+  var result = false;
+
   for(var i = 0; i < this.letters.length; i++) {
 
     if(this.letters[i].matches(letter)) {
-      return true;
+      result = true;
     }
   }
-  return false;
+  return result;
 }
 
 // Returns the current state of the word
