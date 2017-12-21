@@ -29,8 +29,8 @@ Word.prototype.guess = function(letter) {
   return false;
 }
 
-// Prints the current state of the word
-Word.prototype.printWord = function() {
+// Returns the current state of the word
+Word.prototype.getWord = function() {
 
   var printString = '';
 
@@ -46,7 +46,7 @@ Word.prototype.printWord = function() {
       printString += " ";
     }
   }
-  console.log(printString);
+  return (printString);
 }
 
 module.exports = Word;
