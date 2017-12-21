@@ -1,48 +1,17 @@
 var inquirer = require("inquirer");
+var word = require("./word.js");
 
 // Can use inquirer or prompt
 
-// Constructor function Word in a separate file
-
-// Constructor function Letter in a separate file
-
-
-
 // Track user's remaining guesses and prompt the user if they would like to end the game if none remain.
-
-
-
-/*
-
-Start with array of words
-Pick one randomly
-Create new Word object filled with Letters
-
-Display the currrent state of the word to the user
-displayWord(word)?
-
-May as well store previous guesses in an array and check for already guessed letters before proceeding
-
-
-
-
-
-
-
-*/
-
-
-
-
-
 
 
 var game = {
   "score": 0,
   "guessesRemaining": 0,
   "lettersGuessed": [],
-  "currentWord" : "",
-  "currentState": [],
+  "currentWord" : null,
+  // "currentState": [],
 
   "dictionary": ["PICARD", "ENTERPRISE", "ROMULAN", "PHASER", "IMZADI", "Q",
                  "HOLODECK", "FERENGI", "KLINGON", "PRIME DIRECTIVE", "TURBOLIFT",
@@ -64,49 +33,41 @@ var game = {
 
     // If letter was already guessed, return.
     if (this.lettersGuessed.indexOf(letter) >= 0) {
+      console.log("You already guessed this letter.  Pick something else.");
       return;
     }
 
     // Else if letter is not in word, add letter to lettersGuessed, decrease guessesRemaining, and return.
     // -- But if gussesRemaining hits 0, you lose this round.
-    else if (!this.currentWord.includes(letter)) {
+    else if (!this.currentWord.guess(letter)) {
       this.lettersGuessed.push(letter);
       this.guessesRemaining--;
-      this.update();
 
       if(this.guessesRemaining === 0) {
-        alert("YOU ARE NOT A TREKKIE!!!  You lose this round.  The word was \"" + this.currentWord + "\".");
-        this.reset(); // restart the game
+        console.log("YOU ARE NOT A TREKKIE!!!  You lose this round.  The word was \"" + this.currentWord.word + "\".");
+        this.reset(); // restart the game             NOTE-- NEED TO PROMPT TO RESTART INSTEAD!!!
         return;
+      }
+      else {
+        console.log("Sorry.  The letter " + letter + " isn't part of this word.");
       }
     }
 
-    // Letter is in the word and not already guessed, so let's update stuff.
+    // Letter is in the word and not already guessed
     else {
       // Add letter to list of guessed letters
       this.lettersGuessed.push(letter);
 
-      // Replace the underscores with the letter for all occurrences of the letter in the word
-      for(var i=0; i<this.currentWord.length; i++) {
-        if(this.currentWord.charAt(i) === letter) {
-         this.currentState[i] = letter;
-        }
-      }
-      // console.log(this.currentState);
-      this.update();
+      // We already updated the word's state with the call to currentWord.guess, so just grab it
+      var wordState = this.currentWord.getWord();
+      console.log(wordState);
 
       // If the word is complete, we win.
-      if(this.currentState.indexOf("_") === -1) {
+      if(wordState.indexOf("_") === -1) {
         this.score++;
-
-
-        var that=this;
-
-        var test = setTimeout(function() {
-          console.log("Congratulations!  You correctly guessed the word " + that.currentWord + ".");
-          game.reset();
-        }, 1000);
-
+        console.log("Congratulations!  You correctly guessed the word " + this.currentWord.word + ".");
+        console.log("Next word!");
+        this.reset();
       }
 
       return;
@@ -116,43 +77,47 @@ var game = {
 
   // Resets the game and picks a new word.
   reset: function() {
-    this.currentState = [];
+    // this.currentState = [];
     this.lettersGuessed = [];
-    this.currentWord = this.getWord();
-    console.log("New word is: " + this.currentWord);
-    this.guessesRemaining = this.currentWord.length + 5;
-
-    for(var i = 0; i < this.currentWord.length; i++) {
-      this.currentState.push("_");
-    }
-
-    this.update();
+    this.currentWord = new Word(this.getWord());
+    console.log("New word is: " + this.currentWord.word);       // COMMENT THIS OUT LOLLOLCHEATINGLOL
+    this.guessesRemaining = this.currentWord.word.length + 5;
+    // this.update();
   },
 
   // Refreshes the display with the latest info
-  update: function() {
-    $("#wins").text(this.score);
-    $("#current").text(this.currentState.join(" "));
-    $("#remaining").text(this.guessesRemaining);
-    $("#lettersGuessed").text(this.lettersGuessed);
-  }
+  // update: function() {
+  //   $("#wins").text(this.score);
+  //   $("#current").text(this.currentState.join(" "));
+  //   $("#remaining").text(this.guessesRemaining);
+  //   $("#lettersGuessed").text(this.lettersGuessed);
+  // }
 
 }
 
 
-$(document).ready(function() {
+// $(document).ready(function() {
 
-  game.reset();
+//   game.reset();
 
-  $(document).keypress(function(event) {
+//   $(document).keypress(function(event) {
 
-    // If the key pressed was a letter, then make a guess.
-    if(event.which > 96 && event.which < 123 || event.which === 32) {
-      game.guessLetter(String.fromCharCode(event.which).toUpperCase());
-    }
-  });
+//     // If the key pressed was a letter, then make a guess.
+//     if(event.which > 96 && event.which < 123 || event.which === 32) {
+//       game.guessLetter(String.fromCharCode(event.which).toUpperCase());
+//     }
+//   });
 
-});
+// });
+
+
+
+game.reset();
+
+// inquirer code for grabbing stuff and printing stuff goes here
+
+
+
 
 
 function randomNum(min,max)
