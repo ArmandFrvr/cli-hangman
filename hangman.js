@@ -1,17 +1,13 @@
 var prompt = require("prompt");
+prompt.message = "";
+
 var Word = require("./word.js");
-
-// Can use inquirer or prompt
-
-// Track user's remaining guesses and prompt the user if they would like to end the game if none remain.
-
 
 var game = {
   "score": 0,
   "guessesRemaining": 0,
   "lettersGuessed": [],
   "currentWord" : null,
-  // "currentState": [],
 
   "dictionary": ["PICARD", "ENTERPRISE", "ROMULAN", "PHASER", "IMZADI", "Q",
                  "HOLODECK", "FERENGI", "KLINGON", "PRIME DIRECTIVE", "TURBOLIFT",
@@ -34,6 +30,7 @@ var game = {
     // If letter was already guessed, return.
     if (this.lettersGuessed.indexOf(letter) >= 0) {
       console.log("You already guessed this letter.  Pick something else.");
+      this.askForLetter();
       return;
     }
 
@@ -45,12 +42,14 @@ var game = {
 
       if(this.guessesRemaining === 0) {
         console.log("YOU ARE NOT A TREKKIE!!!  You lose this round.  The word was \"" + this.currentWord.word + "\".");
+        console.log("Your score is now: " + this.score + ".");
         this.reset(); // restart the game             NOTE-- NEED TO PROMPT TO RESTART INSTEAD!!!
         return;
       }
       else {
         console.log("Sorry.  The letter " + letter + " isn't part of this word.");
         console.log("You have " + this.guessesRemaining + " guesses left.");
+        this.askForLetter();
       }
     }
 
@@ -70,7 +69,29 @@ var game = {
         console.log("Next word!");
         this.reset();
       }
+      else {
+        this.askForLetter();
+      }
     }
+  },
+
+  // Uses Prompt to request the user's next guess
+  askForLetter: function() {
+    prompt.get({
+      properties: {
+        letter: {
+          description: "Guess a letter"
+        }
+      }
+    }, function(err, result) {
+
+      if(err) {
+        return console.log(err);
+      }
+
+      game.guessLetter(result.letter.toUpperCase());
+
+      });
   },
 
   // Resets the game and picks a new word.
@@ -80,6 +101,8 @@ var game = {
     console.log("New word is: " + this.currentWord.word);       // COMMENT THIS OUT LOLLOLCHEATINGLOL
     this.guessesRemaining = this.currentWord.word.length + 5;
     console.log("\n" + this.currentWord.getWord() + "\n");
+    prompt.start();
+    this.askForLetter();
   },
 
 }
@@ -87,18 +110,7 @@ var game = {
 
 game.reset();
 
-game.guessLetter('t'.toUpperCase());
-game.guessLetter('e'.toUpperCase());
-game.guessLetter('n'.toUpperCase());
 
-// inquirer code for grabbing stuff and printing stuff goes here
-
-
-
-
-
-function randomNum(min,max)
-{
+function randomNum(min,max) {
     return Math.floor(Math.random()*(max-min+1)+min);
-
 }
