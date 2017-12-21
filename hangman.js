@@ -69,20 +69,16 @@ var game = {
         console.log("Next word!");
         this.reset();
       }
-
-      return;
     }
-
   },
 
   // Resets the game and picks a new word.
   reset: function() {
-    // this.currentState = [];
     this.lettersGuessed = [];
     this.currentWord = new Word(this.getWord());
     console.log("New word is: " + this.currentWord.word);       // COMMENT THIS OUT LOLLOLCHEATINGLOL
     this.guessesRemaining = this.currentWord.word.length + 5;
-    // this.update();
+    console.log(this.currentWord.getWord());
   },
 
   // Refreshes the display with the latest info
