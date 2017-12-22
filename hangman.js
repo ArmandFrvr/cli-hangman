@@ -82,7 +82,10 @@ var game = {
     prompt.get({
       properties: {
         letter: {
-          description: "Guess a letter"
+          description: "Guess a letter",
+          pattern: /^[a-zA-Z ]{1}$/,
+          message: "Please enter a single character or space.",
+          required: true
         }
       }
     }, function(err, result) {
