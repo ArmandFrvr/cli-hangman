@@ -1,4 +1,8 @@
 # cli-hangman
 Command line hangman using constructor functions.
 
-To begin, type *node hangman.js*
+## Installation
+Use *npm install* to install the packages.
+
+## Use
+Type *node hangman.js* to call the program.
