@@ -137,7 +137,7 @@ var game = {
 
 }
 
-
+console.log("\nWelcome to Command-Line Hangman!");
 game.reset();
 
 
