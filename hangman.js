@@ -21,11 +21,6 @@ var game = {
   },
 
   guessLetter: function(letter) {
-    // If key was not a letter, return because somebody wasn't doing their input validation.
-    // if(!letter.match(/[A-Z]/)) {
-    //   console.log ("Bad key: " + letter);
-    //   return;
-    // }
 
     // If letter was already guessed, return.
     if (this.lettersGuessed.indexOf(letter) >= 0) {
