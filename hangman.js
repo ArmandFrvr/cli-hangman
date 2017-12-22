@@ -135,7 +135,7 @@ var game = {
 
 }
 
-console.log("\nWelcome to Command-Line Hangman!");
+console.log("\nWelcome to Command-Line Star Trek:TNG Hangman!");
 game.reset();
 
 
