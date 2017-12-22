@@ -30,7 +30,7 @@ var game = {
     // If letter was already guessed, return.
     if (this.lettersGuessed.indexOf(letter) >= 0) {
       console.log("You already guessed this letter.  Pick something else.");
-      this.askForLetter();
+      game.askForLetter();
       return;
     }
 
@@ -42,14 +42,15 @@ var game = {
 
       if(this.guessesRemaining === 0) {
         console.log("YOU ARE NOT A TREKKIE!!!  You lose this round.  The word was \"" + this.currentWord.word + "\".");
-        console.log("Your score is now: " + this.score + ".");
-        this.reset(); // restart the game             NOTE-- NEED TO PROMPT TO RESTART INSTEAD!!!
+        console.log("Your current score is: " + this.score + ".\n");
+        game.askToContinue();
         return;
       }
       else {
         console.log("Sorry.  The letter " + letter + " isn't part of this word.");
         console.log("You have " + this.guessesRemaining + " guesses left.");
-        this.askForLetter();
+        console.log("\n" + this.currentWord.getWord() + "\n");
+        game.askForLetter();
       }
     }
 
@@ -66,11 +67,12 @@ var game = {
       if(wordState.indexOf("_") === -1) {
         this.score++;
         console.log("Congratulations!  You correctly guessed the word " + this.currentWord.word + ".");
+        console.log("Your score is now: " + this.score + ".\n");
         console.log("Next word!");
         this.reset();
       }
       else {
-        this.askForLetter();
+        game.askForLetter();
       }
     }
   },
@@ -94,15 +96,43 @@ var game = {
       });
   },
 
+  askToContinue: function() {
+    prompt.get({
+      properties: {
+        continue: {
+          description: "Would you like to continue?  Y/N"
+        }
+      }
+    }, function(err, result) {
+
+      if(err) {
+        return console.log(err);
+      }
+
+      if(result.continue.toUpperCase() == 'Y') {
+        console.log("\nAwesome.  New word!");
+        game.reset();
+      }
+      else if(result.continue.toUpperCase() === 'N') {
+        console.log("\nToo bad.  Thanks for playing!\n");
+      }
+      else {
+        console.log("\nI'm sorry, I didn't understand that response.");
+        game.askToContinue();
+      }
+
+    });
+  },
+
   // Resets the game and picks a new word.
   reset: function() {
     this.lettersGuessed = [];
     this.currentWord = new Word(this.getWord());
-    console.log("New word is: " + this.currentWord.word);       // COMMENT THIS OUT LOLLOLCHEATINGLOL
+    // console.log("New word is: " + this.currentWord.word);       // CHEAT CODE
     this.guessesRemaining = this.currentWord.word.length + 5;
     console.log("\n" + this.currentWord.getWord() + "\n");
     prompt.start();
-    this.askForLetter();
+    game.askForLetter();
   },
 
 }
